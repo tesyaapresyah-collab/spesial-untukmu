@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesayangan Aku</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #BDE7F4;
+            font-family: 'Poppins', sans-serif;
+            color: #2D3748;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .circle-1 { width: 100px; height: 100px; top: 10%; left: 5%; }
+        .circle-2 { width: 50px; height: 50px; top: 15%; left: 12%; }
+        .circle-3 { width: 150px; height: 150px; bottom: 10%; right: 10%; }
+        .circle-4 { width: 80px; height: 80px; bottom: 5%; right: 20%; }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-bar {
+            background: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            width: 300px;
+            border: 2px solid #a3887c; 
+            font-weight: 500;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .search-bar span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #666;
+            text-decoration: underline;
+        }
+
+        main {
+            display: flex;
+            padding: 40px 80px;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 70vh;
+        }
+
+        .text-section {
+            flex: 1;
+            max-width: 550px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .text-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .text-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .btn-klik {
+            background-color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-klik:hover {
+            transform: scale(1.05);
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .photo-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 400px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            position: absolute;
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .polaroid:hover {
+            z-index: 20 !important;
+            transform: scale(1.05) rotate(0deg) !important;
+        }
+
+        .p1 { transform: rotate(-10deg); z-index: 1; left: 10%; }
+        .p2 { transform: rotate(15deg); z-index: 2; right: 10%; top: -20px; }
+        .p3 { transform: rotate(5deg); z-index: 3; bottom: -30px; }
+
+        .page-content {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+
+        /* Tampilan khusus untuk kata-kata buatanmu sendiri */
+        .custom-text {
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 20px auto 30px auto;
+            text-align: center;
+            font-style: italic;
+            color: #333;
+        }
+
+        .gallery-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .gallery-container .polaroid {
+            position: relative;
+            transform: rotate(0deg);
+        }
+        .gallery-container .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .gallery-container .polaroid:nth-child(odd) { transform: rotate(-3deg); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #bg-music {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Musik Latar -->
+    <audio id="bg-music" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="bg-decoration circle-1"></div>
+    <div class="bg-decoration circle-2"></div>
+    <div class="bg-decoration circle-3"></div>
+    <div class="bg-decoration circle-4"></div>
+
+    <header>
+        <div class="search-bar">
+            <input type="text" value="kesayangan aku" readonly>
+            <span>&#9906;</span> 
+        </div>
+        <nav>
+            <a onclick="showPage('kontak')">KONTAK</a>
+            <a onclick="showPage('something')">SOMETHING</a>
+            <a onclick="showPage('tentang')">TENTANG</a>
+            <a onclick="showPage('beranda')" class="active" id="nav-beranda">BERANDA</a>
+        </nav>
+    </header>
+
+    <!-- HALAMAN BERANDA -->
+    <main id="beranda" class="page-content active">
+        <div class="text-section">
+            <h1>INI NAMANYA<br>KESAYANGAN AKU</h1>
+            <p>ini mungkin sangat sederhana tapi ini dibuat dari hati dan ketulusan aku, hai orang yang paling aku sayangg rasanya dunia aku bakal sepi kalo ga ada sayang terimakasih sudah menemani aku selama ini dan maaf jika selalu membuatmu kecewa tapi tetap sayang selalu sama sayangg everyday, everytime, every minute, every second and forever</p>
+            <button class="btn-klik" onclick="showPage('klik-ini')">klik ini</button>
+            <div class="footer-text">www.nazairintesya.com</div>
+        </div>
+
+        <div class="photo-section">
+            <div class="polaroid p1"><img src="foto_beranda1.jpg" alt="Foto 1"></div>
+            <div class="polaroid p2"><img src="foto_beranda2.jpg" alt="Foto 2"></div>
+            <div class="polaroid p3"><img src="foto_beranda3.jpg" alt="Foto 3"></div>
+        </div>
+    </main>
+
+    <!-- HALAMAN KLIK INI -->
+    <div id="klik-ini" class="page-content">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 36px;">Spesial Untuk Kesayangan Aku ❤️</h1>
+        
+        <!-- Ganti teks di bawah ini dengan kata-katamu -->
+        <p class="custom-text">
+            jujur, bersyukur banget bisa deket sama kamu sejauh ini. sayang tu kayak safe place buat aku di tengah-tengah hari yang kadang bikin pusing. terimakasi ya sayang udah sabar banget ngadepin aku yang kadang suka ribet sendiri. kehadiran sayang bikin hari-hari biasa jadi jauh lebih berwarna dan seru. Intinya, aku sayang banget sama sayang. ayo kita terus semangat buat ngejalanin hari dan capai hal-hal keren ke depannya. kalau nanti sayang lagi capek, ingat ada aku yang selalu siap jadi tempat buat kamu cerita atau sekadar istirahat. makasi ya udah jadi tempat ternyaman buat aku cerita apa aja tanpa harus jaim. semoga ke depannya kita bisa terus saling dukung, tumbuh bareng, dan melewati hal-hal seru lainnya berdua. sehat-sehat terus ya, jangan suka telat makan, dan tetap jadi diri kamu yang sekarang!
+        </p>
+
+        <div class="gallery-container">
+            <div class="polaroid"><img src="foto_klik1.jpg" alt="Foto Pacar 1"></div>
+            <div class="polaroid"><img src="foto_klik2.jpg" alt="Foto Pacar 2"></div>
+            <div class="polaroid"><img src="foto_klik3.jpg" alt="Foto Pacar 3"></div>
+        </div>
+    </div>
+
+    <!-- HALAMAN TENTANG -->
+    <div id="tentang" class="page-content">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 36px;">Tentang Kita</h1>
+        
+        <!-- Ganti teks di bawah ini dengan kata-katamu -->
+        <p class="custom-text">
+            hai sekarang lagi di tentang ya, kira” apa ya tentang kita ini atau kita bahas rasa sayang satu sama lain?? boleh dehh. heii kalian liat kita akur” teruskan ya tapi dibalik itu kita lumayan sering berantem apalagi kalo pacar aku ini lagi cemburu huu kalah ego aku sama ego dia tapi gapapa cemburu itu wajar kok sayang itu rasa yang timbul disaat sayang cinta sama seseorang dan itu aku orang yang sayang cinta, selalu jadi pacar aku yaa sayangg aku berantem sama sayang aja udah pusing aplg harus ditinggal sama sayang apalagi awal” ldr huu itu fase ter ter ter pokoknya ga bisa dijelasin dengan kata-kata tapi sayang selalu ngajarin buat sabar dan jalanin setiap proses sayang selalu dukung aku dalam hal apapun itu apalagi pendidikan pasti paling utama, banyak hal yang aku pelajari dari sayang. always happy sama sayanggg semoga umur sayang panjang biar bisa bahagiain aku teruss
+        </p>
+
+        <div class="gallery-container">
+            <div class="polaroid"><img src="foto_tentang1.jpg" alt="Foto Tentang 1"></div>
+            <div class="polaroid"><img src="foto_tentang2.jpg" alt="Foto Tentang 2"></div>
+        </div>
+    </div>
+
+    <!-- HALAMAN SOMETHING -->
+    <div id="something" class="page-content">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 36px;">Something Special</h1>
+        
+        <!-- Ganti teks di bawah ini dengan kata-katamu -->
+        <p class="custom-text">
+            HAI SAYANGKUU, awal pertemuan kita di pagarpark tak disangka tak diduga bisa cinlok disana dak pernah terlintas di otak aku bahwa aku biso samo sayang bakal sampe hari ini detik ini suatu kebahagian yang aku punya suatu takdir yang sangat amat indah, terimakasih ya telah lahir di dunia ini dan mengajarkan aku banyak hal dan selalu sabar menghadapi sifat bahkan sikap aku yang masih kekanakan, semoga hidup sayang dikeliling orang baik dan lindungi oleh hal baik. selalu jadi kebahagian aku, sumber kebahagian aku, selalu jadi garda terdepan untuk aku, selalu jadi tempat aku pulang. aku suka semua hal tentang sayang apapun itu selalu sama ku yaa, always sama aku, i love u more sayanggg.
+        </p>
+
+        <div class="gallery-container">
+            <div class="polaroid"><img src="foto_something1.jpg" alt="Foto Something 1"></div>
+            <div class="polaroid"><img src="foto_something2.jpg" alt="Foto Something 2"></div>
+        </div>
+    </div>
+
+    <!-- HALAMAN KONTAK -->
+    <div id="kontak" class="page-content">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 36px;">Kontak</h1>
+        <p style="margin-top: 20px; font-size: 18px;">Hubungi aku kapan saja, di mana saja. always ready untuk sayang bakal jadi 911 sayang</p>
+        <p style="margin-top: 10px;">WhatsApp: <b>083802894333</b></p>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+
+            const music = document.getElementById('bg-music');
+            if (music.paused) {
+                music.play().catch(error => console.log("Menunggu interaksi klik."));
+            }
+        }
+    </script>
+
+</body>
+</html>
